@@ -1,0 +1,53 @@
+.header {
+    background-color: white;
+    min-height: 80px;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+}
+
+.userinfo {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.userinfo button {
+    font-size: 18px;
+    line-height: 22px;
+    border-radius: 5px;
+    padding: 10px 16px;
+}
+
+.widthwrapper {
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title {
+    align-self: center;
+    text-decoration: none;
+}
+
+.title:visited {
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.signupbtn {
+    color: #52C41A;
+    border: 1px solid #52C41A;
+}
+
+.unsigned {
+    display: flex;
+    gap: 10px;
+}
+
+.signed {
+    display: none;
+}
