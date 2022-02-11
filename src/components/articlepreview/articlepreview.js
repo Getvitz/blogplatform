@@ -1,43 +1,71 @@
 import React from "react";
+import { v4 as uuid } from "uuid";
+// import propTypes from 'prop-types'
 import { Tag } from "antd";
+// import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import format from "date-fns/format";
 import styles from './articlepreview.module.scss';
 import likesheart from "../../assets/img/likesheart.svg"
-import avatar from "../../assets/img/avatar.svg"
+// import avatar from "../../assets/img/avatar.svg"
+// import * as actions from '../../apiClient';
 
-function Articlepreview() {
+function Articlepreview (article) {
+    const {title, slug, author, description, createdAt, tagList} = article;
+    const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;
 
-    // const getArticle = () => {
-
-    // }
+    const tags = tagList ? tagList.map((tag) => tagList.length && <Tag key={uuid()}>{tag}</Tag>) : null;
 
   return (
     <div className={styles.information}>
         <div className={styles.header}>
             <div className={styles.postinfo}>
                 <div className={styles.title}>
-                    <Link to='/articles/1' className={styles.titletext}>Some article title</Link>
+                    <Link to={`/articles/${slug}`} className={styles.titletext}>{title}</Link>
                     <div className={styles.likes}>
-                        <img src={likesheart} alt="img" />
+                        <img src={likesheart} alt="like-img" />
                         <span>12</span>
                     </div>
                 </div>
                 <div className={styles.taglist}>
-                <Tag className={styles.tag}>Tag1</Tag>
-                <Tag className={styles.tag}>SomeTag2</Tag>
+                    {tags}
                 </div>
             </div>
             <div className={styles.userinfo}>
                 <div className={styles.namedate}>
-                    <div className={styles.name}>John Doe</div>
-                    <div className={styles.date}>March 5, 2020 </div>
+                    <div className={styles.name}>{author.username}</div>
+                    <div className={styles.date}>{creationDate}</div>
                 </div>
-                <img src={avatar} alt="user_avatar" />
+                <img className={styles.authoravatar} src={author.image} alt="user_avatar" />
             </div>
         </div>
-        <div className={styles.previewtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris  nisi ut aliquip ex ea commodo consequat. </div>
+        <div className={styles.previewtext}>{description}</div>
     </div>
   );
 }
 
-export default Articlepreview;
+// const mapStateToProps = ({ article  }) => ({
+//     article,
+//     // title,
+//     // slug,
+//     // author,
+//     // description,
+//     // createdAt
+//   });
+  
+  export default Articlepreview;
+
+// Articlepreview.defaultProps = {
+//     title: '',
+//     description: '',
+//     slug: '',
+
+//   };
+
+// Articlepreview.propTypes = {
+//     // author: propTypes.instanceOf(Object).isRequired,
+//     slug: propTypes.string,
+//     title: propTypes.string,
+//     description: propTypes.string,
+//     getOneArticle: propTypes.func.isRequired
+//   }
