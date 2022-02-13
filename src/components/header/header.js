@@ -6,18 +6,18 @@ function Header() {
   return (
     <div className={styles.header}>
         <div className={styles.widthwrapper}>
-        <Link to='/' className={styles.title}>
+        <Link to='/articles' className={styles.title}>
             Realworld Blog
         </Link>
         <div className={styles.userinfo}>
             <div className={styles.unsigned}>
-                <button type="button" className={styles.signinbtn}>Sign in</button>
-                <button type="button" className={styles.signupbtn}>Sign up</button>
+                <Link to="/sign-in"><button type="button" className={styles.signinbtn}>Sign in</button></Link>
+                <Link to="/sign-up"><button type="button" className={styles.signupbtn}>Sign up</button></Link>
             </div>
             <div className={styles.signed}>
-                <button type="button">Create</button>
-                <img src="#" alt="user_avatar" />
-                <button type="button">Sign up</button>
+                <button type="button">Create article</button>
+                <Link to="/profile"><img src="#" alt="user_avatar" /></Link>
+                <button type="button">Log out</button>
             </div>
         </div>
         </div>

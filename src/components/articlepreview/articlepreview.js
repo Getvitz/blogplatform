@@ -7,15 +7,13 @@ import { Link } from "react-router-dom";
 import format from "date-fns/format";
 import styles from './articlepreview.module.scss';
 import likesheart from "../../assets/img/likesheart.svg"
-// import avatar from "../../assets/img/avatar.svg"
-// import * as actions from '../../apiClient';
+
 
 function Articlepreview (article) {
     const {title, slug, author, description, createdAt, tagList} = article;
     const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;
 
-    const tags = tagList ? tagList.map((tag) => tagList.length && <Tag key={uuid()}>{tag}</Tag>) : null;
-
+    const tags = tagList ? tagList.map((tag) => tag && <Tag key={uuid()}>{tag}</Tag>) : null;
   return (
     <div className={styles.information}>
         <div className={styles.header}>
