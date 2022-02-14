@@ -16,6 +16,9 @@
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
+}
+
+.unsigned button {
     padding: 10px 16px;
 }
 
@@ -23,7 +26,7 @@
     margin: 0 auto;
     padding: 0 20px;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1300px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -44,8 +47,7 @@
 }
 
 .signupbtn:hover {
-    opacity: 0.7;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .signinbtn:hover {
@@ -57,6 +59,49 @@
     gap: 10px;
 }
 
+.user {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 28px;
+}
+
+.user:hover {
+    color: rgba(0, 0, 0, 0.85);
+}
+
 .signed {
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.createbtn {
+    font-size: 14px;
+    border: 1px solid #52C41A;
+    color: #52C41A;
+    font-weight: 300;
+    padding: 2px 7px;
+}
+
+.createbtn:hover {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.logoutbtn {
+    border: 1px solid rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.85);
+    padding: 10px 10px;
+}
+
+.logoutbtn:hover {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.avatar {
+    border-radius: 50%;
+    max-width: 46px;
+    max-height: 46px;
 }

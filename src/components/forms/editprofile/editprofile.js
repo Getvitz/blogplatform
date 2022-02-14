@@ -1,28 +1,55 @@
 import React, {useEffect} from 'react';
 import { Form, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import styles from './editprofile.module.scss'
+import { updateUser } from '../../../apiClient';
+import { setUserData } from '../../../store/actions';
 
 
 export default function EditProfileForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const stateUsername = useSelector(state => state.user.username);
+  const stateEmail = useSelector(state => state.user.email);
+  const token = useSelector(state => state.user.token);
+
    useEffect(() => {
 		form.setFieldsValue({
-			email: 'vasya@ya.da',
-      username: 'Vasiliy'
+			email: stateEmail,
+      username: stateUsername
 		});
-	}, [form]);
+	}, [form, stateEmail, stateUsername]);
 
     const onFinish = values => {
+      console.log(token)
       form.resetFields();
       const formData = {
-        "user": {
-          "username": values.username,
           "email": values.email,
+          // "token": token,
+          "username": values.username,
           "password": values.password,
-          "avatar": values.image
-        }
+          "image": values.image,
       }
+      updateUser(formData, token)
+      .then((body) => {
+        if(body.errors) {
+          form.setFields([
+          {
+            name: 'warning',
+            errors: [body.errors.message],
+          },
+       ])
+      }
+    else {
+        dispatch(setUserData(body.user));
+        Cookies.set('token', body.user.token)
+        navigate('/')
+  }});  
     console.log('Received values of form: ', formData);
   };
 
@@ -35,9 +62,9 @@ export default function EditProfileForm() {
       className={styles.loginform}
       onFinish={onFinish}
     >
-      <div className={styles.title}>
+      <Form.Item className={styles.title} name='warning'>
         <span>Edit Profile</span>
-      </div>
+      </Form.Item>
       <Form.Item
         className={styles.input}
         label="Username"
@@ -94,7 +121,6 @@ export default function EditProfileForm() {
         rules={[
           {
             type: 'url',
-            warningOnly: true,
             message: "Must be a valid url"
           },
         ]}
@@ -102,16 +128,13 @@ export default function EditProfileForm() {
         <Input placeholder="Avatar image" />
       </Form.Item>
       <Form.Item shouldUpdate className={styles.submit}>
-        { () => (<Button 
+        <Button 
           type="primary" 
           htmlType="submit" 
           className={styles.savebtn} 
-          disabled={
-            !form.isFieldsTouched(true) ||
-            form.getFieldsError().filter(({ errors }) => errors.length).length
-          }>
+          >
           Save
-        </Button>)}
+        </Button>
       </Form.Item>
     </Form>
   );

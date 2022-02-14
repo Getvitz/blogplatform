@@ -1,20 +1,43 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
-import styles from './signin.module.scss'
+import Cookies from 'js-cookie';
+import { signInUser } from '../../../apiClient';
+import styles from './signin.module.scss';
+import { setUserData, setSignedIn, dataLoading } from '../../../store/actions';
 
 export default function SignInForm() {
 
   const [form] = Form.useForm();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
     const onFinish = values => {
-      form.resetFields();
+      dispatch(dataLoading)
       const formData = {
-        "user": {
           "email": values.email,
           "password": values.password
-        }
       }
+      signInUser(formData)
+      .then((body) => {
+        if (body.errors) {
+          form.setFields([
+          {
+            name: 'email',
+            errors: ['Sorry, email or password is invalid!'],
+          },
+       ])
+    }
+    else {
+        form.resetFields();
+        dispatch(setUserData(body.user));
+        dispatch(setSignedIn(true));
+        Cookies.set('token', body.user.token)
+        Cookies.set('user', JSON.stringify(body.user))
+        navigate('/')
+  }});  
     console.log('Received values of form: ', formData);
   };
 

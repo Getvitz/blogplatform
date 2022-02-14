@@ -1,21 +1,59 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
+import Cookies from 'js-cookie';
 import styles from './signup.module.scss'
+import { registerUser } from '../../../apiClient';
+import { setUserData, setSignedIn, dataLoading } from '../../../store/actions';
 
 
 export default function SignUpForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const register = (data) => {
+    dispatch(dataLoading)
+    registerUser(data)
+    .then((body) => {
+      if (body.errors) {
+          if('email' in body.errors) {
+            form.setFields([
+            {
+              name: 'email',
+              errors: ['Sorry, this email is already taken'],
+            },
+         ])
+        }
+          if('username' in body.errors){
+            form.setFields([
+              {
+                name: 'username',
+                errors: ['Sorry, this username is already taken'],
+              },
+           ])
+          }
+      }
+      else {
+      form.resetFields()
+      dispatch(setUserData(body.user));
+      dispatch(setSignedIn(true));
+      console.log(body.user.token)
+      Cookies.set('token', body.user.token);
+      navigate('/')
+      }
+  })
+  }
+
     const onFinish = values => {
-      form.resetFields();
       const formData = {
-        "user": {
           "username": values.username,
           "email": values.email,
           "password": values.password
-        }
       }
+      register(formData)
     console.log('Received values of form: ', formData);
   };
 
@@ -145,13 +183,13 @@ export default function SignUpForm() {
           htmlType="submit" 
           className={styles.createbtn} 
           disabled={
-            !form.isFieldsTouched(true) ||
+            !form.isFieldsTouched(['username', 'email', 'password', 'confirm'], true) ||
             form.getFieldsError().filter(({ errors }) => errors.length).length
           }>
           Create
         </Button>)}
       </Form.Item>
-      <span className={styles.reminder}>Already have an account? <Link to="/sign-up">Sign In.</Link></span>
+      <span className={styles.reminder}>Already have an account? <Link to="/sign-in">Sign In.</Link></span>
     </Form>
   );
 };
