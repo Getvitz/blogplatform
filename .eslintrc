@@ -3,10 +3,11 @@
       "airbnb",
       "airbnb/hooks",
       "eslint-config-prettier",
-      "prettier"
+      "prettier",
+      "plugin:import/typescript"
     ],
-    "plugins": ["react", "@babel"],
-    "parser": "@babel/eslint-parser",
+    "plugins": ["react", "@babel", "@typescript-eslint"],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "sourceType": "module",
       "requireConfigFile": false,
@@ -40,12 +41,19 @@
       "react/state-in-constructor": ["off"],
       "react/jsx-props-no-spreading": ["off"],
       "react/static-property-placement": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-    },
+      "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+      "import/no-unresolved": 0,
+      "import/extensions": 0 ,
+      "react/function-component-definition": [2,{ "namedComponents": "arrow-function", "unnamedComponents": "arrow-function"}]},
     "settings": {
       "react": {
         "pragma": "React",
         "version": "detect"
-      }
+      },
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      } 
     }
   }

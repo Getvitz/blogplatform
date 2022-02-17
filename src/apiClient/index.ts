@@ -1,24 +1,20 @@
-import { dataLoading, getArticlesSuccess, getOneArticleSuccess, receiveError } from '../store/actions';
+import { SetUserDataPayloadType } from "../typescript/types/types";
 
 const apiBase = 'https://kata.academy:8021/api/';
 
-export const getOneArticle = (slug) => (dispatch) => {
-  dispatch(dataLoading());
-  fetch(`${apiBase}articles/${slug}`)
+export const getOneArticle = async (slug: string) => {
+  const res = await fetch(`${apiBase}articles/${slug}`)
     .then((res) => res.json())
-    .then((body) => dispatch(getOneArticleSuccess(body.article)))
-    .catch(() => dispatch(receiveError()));
+    return res
 };
 
-export const getAllArticles = (limit, offset) => (dispatch) => {
-  dispatch(dataLoading());
-  fetch(`${apiBase}articles?limit=${limit}&offset=${offset}`)
+export const getAllArticles = async (limit: number, offset: number) => {
+  const res = fetch(`${apiBase}articles?limit=${limit}&offset=${offset}`)
     .then((res) => res.json())
-    .then((body) => dispatch(getArticlesSuccess(body)))
-    .catch(() => dispatch(receiveError()));
+  return res
 };
 
-export const registerUser = async (data) => {
+export const registerUser = async (data: Pick<SetUserDataPayloadType, 'email'> & {password: string}) => {
   const res = await fetch(`${apiBase}users`, {
     method: 'POST',
     headers: {
@@ -29,7 +25,7 @@ export const registerUser = async (data) => {
   return res;
 };
 
-export const signInUser = async (data) => {
+export const signInUser = async (data: Pick<SetUserDataPayloadType, 'email'> & {password: string}) => {
   const res = await fetch(`${apiBase}users/login`, {
     method: 'POST',
     headers: {
@@ -40,7 +36,7 @@ export const signInUser = async (data) => {
   return res;
 };
 
-export const updateUser = async (data, token) => {
+export const updateUser = async (data: SetUserDataPayloadType, token: string) => {
   const res = await fetch(`${apiBase}user`, {
     method: 'PUT',
     headers: {

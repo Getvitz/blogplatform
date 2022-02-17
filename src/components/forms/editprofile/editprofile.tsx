@@ -1,22 +1,29 @@
 import React, {useEffect} from 'react';
 import { Form, Input, Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import styles from './editprofile.module.scss'
 import { updateUser } from '../../../apiClient';
-import { setUserData } from '../../../store/actions';
+import { setUserData } from '../../../redux/actions/actions';
+import { useAppSelector, useAppDispatch } from '../../../typescript/hooks'
+import { RootState } from "../../../redux";
+import { FormDataType } from '../../../typescript/types/types';
 
 
-export default function EditProfileForm() {
+const EditProfileForm: React.FC = () => {
   const [form] = Form.useForm();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const stateUsername = useSelector(state => state.user.username);
-  const stateEmail = useSelector(state => state.user.email);
-  const token = useSelector(state => state.user.token);
+  const getStateUsername = (state: RootState) => state.user.username;
+  const getStateEmail = (state: RootState) => state.user.email;
+  const getToken = (state: RootState) => state.user.token;
+
+  const stateUsername = useAppSelector(getStateUsername)
+  const stateEmail = useAppSelector(getStateEmail)
+  const token = useAppSelector(getToken)
+
 
    useEffect(() => {
 		form.setFieldsValue({
@@ -25,12 +32,10 @@ export default function EditProfileForm() {
 		});
 	}, [form, stateEmail, stateUsername]);
 
-    const onFinish = values => {
-      console.log(token)
+    const onFinish = (values: FormDataType) => {
       form.resetFields();
       const formData = {
           "email": values.email,
-          // "token": token,
           "username": values.username,
           "password": values.password,
           "image": values.image,
@@ -83,7 +88,6 @@ export default function EditProfileForm() {
         className={styles.input}
         label="Email address"
         name="email"
-        type="email"
         hasFeedback
         rules={[
           {
@@ -139,3 +143,5 @@ export default function EditProfileForm() {
     </Form>
   );
 };
+
+export default EditProfileForm;

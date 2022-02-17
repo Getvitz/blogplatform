@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import styles from './layout.module.scss'
 import Header from '../header';
 
-function Layout() {
+const Layout: React.FC = () => {
   return (
     <>
         <Header />

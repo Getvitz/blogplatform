@@ -1,15 +1,14 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-// import propTypes from 'prop-types'
 import { Tag } from "antd";
-// import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import format from "date-fns/format";
 import styles from './articlepreview.module.scss';
-import likesheart from "../../assets/img/likesheart.svg"
+import likesheart from "../../assets/img/likesheart.svg";
+import { ArticleType } from "../../typescript/types/types";
 
 
-function Articlepreview (article) {
+const Articlepreview: React.FC<ArticleType> = (article: ArticleType) => {
     const {title, slug, author, description, createdAt, tagList} = article;
     const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;
 
@@ -41,29 +40,5 @@ function Articlepreview (article) {
     </div>
   );
 }
-
-// const mapStateToProps = ({ article  }) => ({
-//     article,
-//     // title,
-//     // slug,
-//     // author,
-//     // description,
-//     // createdAt
-//   });
   
-  export default Articlepreview;
-
-// Articlepreview.defaultProps = {
-//     title: '',
-//     description: '',
-//     slug: '',
-
-//   };
-
-// Articlepreview.propTypes = {
-//     // author: propTypes.instanceOf(Object).isRequired,
-//     slug: propTypes.string,
-//     title: propTypes.string,
-//     description: propTypes.string,
-//     getOneArticle: propTypes.func.isRequired
-//   }
+export default Articlepreview;

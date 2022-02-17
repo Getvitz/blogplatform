@@ -1,18 +1,32 @@
+import { ArticleType, DataLoadingType, GetArticlesSuccessType, GetOneArticlesSuccessType } from "../typescript/types/types";
+
 const defaultState = {
-  // slug: null,
   loading: true,
-  error: 0,
-  articlesList: [],
   articlesCount: 0,
+  articlesList: [] as Array<ArticleType>,
   article: {
     author: {
       username: '',
+      image: '',
+      following: false
     },
+    body: '',
+    createdAt: '',
+    description: '',
     favorited: false,
-  },
+    favoritesCount: 0,
+    slug: '',
+    tagList:[] as Array<string>,
+    title: '',
+    updatedAt: ''
+  } as ArticleType,
 };
 
-const articlesReducer = (state = defaultState, action) => {
+export type DefaultStateType = typeof defaultState;
+
+type ArticleActionsType = DataLoadingType | GetArticlesSuccessType | GetOneArticlesSuccessType;
+
+const articlesReducer = (state = defaultState, action: ArticleActionsType) : DefaultStateType => {
   switch (action.type) {
     case 'DATA_LOADING':
       return {
@@ -25,11 +39,6 @@ const articlesReducer = (state = defaultState, action) => {
         articlesList: [...action.payload.articles],
         articlesCount: action.payload.articlesCount,
         loading: false,
-      };
-    case 'ERROR_RECEIVED':
-      return {
-        ...state,
-        error: state.error + 1,
       };
     case 'GET_ONE_ARTICLE':
       return {

@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import styles from './app.module.scss';
 import 'antd/dist/antd.min.css';
@@ -10,16 +9,15 @@ import Article from "../article";
 import SignInForm from "../forms/signin/signin";
 import SignUpForm from "../forms/signup";
 import EditProfileForm from "../forms/editprofile/editprofile";
-import { setSignedIn, setUserData } from "../../store/actions";
+import { setSignedIn, setUserData } from "../../redux/actions/actions";
 import { updateUser } from "../../apiClient";
+import { useAppDispatch } from '../../typescript/hooks'
 
-function App() {
+const App: React.FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // console.log(Cookies.get('token'))
-    // console.log(JSON.parse(Cookies.get('user')))
     if (Cookies.get('token')) {
       updateUser(JSON.parse(Cookies.get('user')), Cookies.get('token'))
       .then((body) => {

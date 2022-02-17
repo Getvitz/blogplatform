@@ -1,21 +1,26 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from './header.module.scss';
-import { logOutUser } from "../../store/actions";
+import { logOutUser } from "../../redux/actions/actions";
+import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
+import { RootState } from "../../redux";
 
-function Header() {
-    const dispatch = useDispatch();
-    const isUserSignedIn = useSelector(state => state.user.signedin);
-    const username = useSelector(state => state.user.username);
-    const image = useSelector(state => state.user.image);
+const Header: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const isSignedIn = (state: RootState) => state.user.signedin;
+    const getUsername = (state: RootState) => state.user.username;
+    const getImage = (state: RootState) => state.user.image;
+
+    const isUserSignedIn = useAppSelector(isSignedIn)
+    const username = useAppSelector(getUsername)
+    const image = useAppSelector(getImage)
     const navigate = useNavigate();
 
     const logOut = () => {
         dispatch(logOutUser());
         Cookies.remove('token')
-        Cookies.remove('user');;
+        Cookies.remove('user');
         navigate('/')
     }
 

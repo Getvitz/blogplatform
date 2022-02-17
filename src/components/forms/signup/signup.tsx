@@ -1,20 +1,22 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
 import Cookies from 'js-cookie';
 import styles from './signup.module.scss'
 import { registerUser } from '../../../apiClient';
-import { setUserData, setSignedIn, dataLoading } from '../../../store/actions';
+import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
+import { SetUserDataPayloadType } from '../../../typescript/types/types';
+import { useAppDispatch } from '../../../typescript/hooks'
 
 
-export default function SignUpForm() {
+const SignUpForm: React.FC = () => {
   const [form] = Form.useForm();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const register = (data) => {
+  const register = (data: Pick<SetUserDataPayloadType, 'email'> & {password: string}) => {
+    // @ts-ignore
     dispatch(dataLoading)
     registerUser(data)
     .then((body) => {
@@ -39,8 +41,7 @@ export default function SignUpForm() {
       else {
       form.resetFields()
       dispatch(setUserData(body.user));
-      dispatch(setSignedIn(true));
-      console.log(body.user.token)
+      dispatch(setSignedIn());
       Cookies.set('token', body.user.token);
       navigate('/')
       }
@@ -95,7 +96,6 @@ export default function SignUpForm() {
         className={styles.input}
         label="Email address"
         name="email"
-        type="email"
         hasFeedback
         rules={[
           {
@@ -184,7 +184,7 @@ export default function SignUpForm() {
           className={styles.createbtn} 
           disabled={
             !form.isFieldsTouched(['username', 'email', 'password', 'confirm'], true) ||
-            form.getFieldsError().filter(({ errors }) => errors.length).length
+            (form.getFieldsError().filter(({ errors }) => errors.length).length) > 0
           }>
           Create
         </Button>)}
@@ -193,3 +193,5 @@ export default function SignUpForm() {
     </Form>
   );
 };
+
+export default SignUpForm;

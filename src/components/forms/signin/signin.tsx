@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
 import Cookies from 'js-cookie';
 import { signInUser } from '../../../apiClient';
 import styles from './signin.module.scss';
-import { setUserData, setSignedIn, dataLoading } from '../../../store/actions';
+import { useAppDispatch } from '../../../typescript/hooks'
+import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
+import { FormDataType } from '../../../typescript/types/types';
 
-export default function SignInForm() {
+const SignInForm: React.FC = () => {
 
   const [form] = Form.useForm();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-    const onFinish = values => {
+    const onFinish = (values: FormDataType) : void => {
+     // @ts-ignore
       dispatch(dataLoading)
       const formData = {
           "email": values.email,
@@ -33,7 +35,7 @@ export default function SignInForm() {
     else {
         form.resetFields();
         dispatch(setUserData(body.user));
-        dispatch(setSignedIn(true));
+        dispatch(setSignedIn());
         Cookies.set('token', body.user.token)
         Cookies.set('user', JSON.stringify(body.user))
         navigate('/')
@@ -58,7 +60,6 @@ export default function SignInForm() {
         className={styles.input}
         label="Email address"
         name="email"
-        type="email"
         hasFeedback
         rules={[
           {
@@ -96,7 +97,7 @@ export default function SignInForm() {
           className={styles.loginbtn} 
           disabled={
             !form.isFieldsTouched(true) ||
-            form.getFieldsError().filter(({ errors }) => errors.length).length
+            (form.getFieldsError().filter(({ errors }) => errors.length).length) > 0
           }>
           Log in
         </Button>)}
@@ -105,3 +106,5 @@ export default function SignInForm() {
     </Form>
   );
 };
+
+export default SignInForm;
