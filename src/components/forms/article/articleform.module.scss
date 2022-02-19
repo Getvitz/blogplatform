@@ -1,0 +1,85 @@
+.articleform {
+    background-color: white;
+    padding: 25px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    border: 1px solid #D9D9D9;
+
+    .title {
+        text-align: center;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 21px;
+    }
+
+    .input {
+        margin-bottom: 14px;
+    }
+    
+    .input textarea{
+        margin-bottom: 15px;
+    }
+
+    button:hover {
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        opacity: 0.7;
+    }
+
+    .addtagbtn {
+        display: none;
+        color: #1890ff;
+      padding: 6px 30px;
+      border-radius: 4px;
+      border: 1px solid #1890ff;
+    }
+
+    .deletetagbtn {
+        color: #f5222d;
+        padding: 6px 25px;
+        border-radius: 4px;
+        border: 1px solid #f5222d;
+    }
+
+    .span {
+        display: block;
+        padding-left: 11px;
+        margin-bottom: 17px;
+    }
+
+    .list {
+        margin-bottom: 10px;
+    }
+
+    .list input {
+        width: 300px;
+    }
+
+    .list span {
+        // padding: 7px;
+        margin-bottom: 5px;
+    }
+
+    .space .now {
+        margin-bottom: 15px;
+    }
+    .space:last-child {
+        .addtagbtn:last-child {
+            display: block;
+    }
+}
+.addbtn {
+    color: #1890ff;
+  padding: 6px 30px;
+  border-radius: 4px;
+  border: 1px solid #1890ff;
+  width: 300px;
+}
+
+.createbtn {
+    margin-top: 10px;
+    width: 300px;
+    border-radius: 4px;
+}
+    
+}

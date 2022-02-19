@@ -1,4 +1,4 @@
-import { SetUserDataPayloadType } from "../typescript/types/types";
+import { ArticleType, SetUserDataPayloadType } from "../typescript/types/types";
 
 const apiBase = 'https://kata.academy:8021/api/';
 
@@ -46,4 +46,28 @@ export const updateUser = async (data: SetUserDataPayloadType, token: string) =>
     body: JSON.stringify({ user: data }),
   }).then((res) => res.json());
   return res;
+};
+
+export const createArticle = async (data: ArticleType, token: string) => {
+  const res = await fetch(`${apiBase}articles`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Token ${token}`,
+      'accept': 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({ article: data }),
+  }).then((res) => res.json());
+  return res;
+};
+
+export const deleteArticle = async (slug: string, token: string) => {
+  await fetch(`${apiBase}articles/${slug}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Token ${token}`,
+      'accept': 'application/json',
+    },
+    body: JSON.stringify(slug),
+  })
 };

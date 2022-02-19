@@ -4,7 +4,8 @@ import {
   DATA_LOADING,
   SET_USER_DATA,
   SIGN_IN,
-  LOG_OUT_USER
+  LOG_OUT_USER,
+  SET_EDIT_MODE
 } from './actionTypes'
 
 import { 
@@ -16,7 +17,8 @@ import {
   SetSignedInType,
   LogOutUserType,
   SetUserDataPayloadType,
-  SetUserDataType
+  SetUserDataType,
+  SetEditModeType
 } from '../../typescript/types/types';
 
 export const getArticlesSuccess = (payload: GetArticlesSuccessPayloadType) : GetArticlesSuccessType => ({
@@ -50,3 +52,10 @@ export const setUserData = (payload : SetUserDataPayloadType) : SetUserDataType 
   type: SET_USER_DATA,
   payload,
 });
+
+export const setEditMode = (boolean: boolean) : SetEditModeType => {
+  return {
+    type: SET_EDIT_MODE,
+    boolean
+  };
+};

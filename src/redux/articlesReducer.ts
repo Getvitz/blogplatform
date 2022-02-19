@@ -1,4 +1,4 @@
-import { ArticleType, DataLoadingType, GetArticlesSuccessType, GetOneArticlesSuccessType } from "../typescript/types/types";
+import { ArticleType, DataLoadingType, GetArticlesSuccessType, GetOneArticlesSuccessType, SetEditModeType } from "../typescript/types/types";
 
 const defaultState = {
   loading: true,
@@ -20,11 +20,12 @@ const defaultState = {
     title: '',
     updatedAt: ''
   } as ArticleType,
+  editmode: false
 };
 
 export type DefaultStateType = typeof defaultState;
 
-type ArticleActionsType = DataLoadingType | GetArticlesSuccessType | GetOneArticlesSuccessType;
+type ArticleActionsType = DataLoadingType | GetArticlesSuccessType | GetOneArticlesSuccessType | SetEditModeType;
 
 const articlesReducer = (state = defaultState, action: ArticleActionsType) : DefaultStateType => {
   switch (action.type) {
@@ -39,12 +40,20 @@ const articlesReducer = (state = defaultState, action: ArticleActionsType) : Def
         articlesList: [...action.payload.articles],
         articlesCount: action.payload.articlesCount,
         loading: false,
+        article: defaultState.article,
+        editmode: false
       };
     case 'GET_ONE_ARTICLE':
       return {
         ...state,
         article: { ...action.payload },
         loading: false,
+        editmode: false
+      };
+    case 'SET_EDIT_MODE':
+      return {
+        ...state,
+        editmode: action.boolean
       };
     default:
       return state;

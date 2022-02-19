@@ -4,7 +4,8 @@ import {
     DATA_LOADING,
     SET_USER_DATA,
     SIGN_IN,
-    LOG_OUT_USER
+    LOG_OUT_USER,
+    SET_EDIT_MODE
   } from '../../redux/actions/actionTypes'
 
 export type AuthorType = {
@@ -14,16 +15,17 @@ export type AuthorType = {
   }
   
 export type ArticleType = {
-    author: AuthorType,
+    author?: AuthorType,
     body: string,
-    createdAt: string,
+    createdAt?: string,
     description: string,
-    favorited: boolean,
-    favoritesCount: number,
-    slug: string,
+    favorited?: boolean,
+    favoritesCount?: number,
+    slug?: string,
     tagList: Array<string>,
     title: string,
-    updatedAt: string
+    updatedAt?: string,
+    editmode?: boolean
   }
 
 export type GetArticlesSuccessPayloadType = {  
@@ -44,6 +46,11 @@ export type GetOneArticlesSuccessType = {
 
 export type DataLoadingType = {
     type: typeof DATA_LOADING
+  }
+
+  export type SetEditModeType = {
+    type: typeof SET_EDIT_MODE,
+    boolean: boolean
   }
 
  export  type SetSignedInType = {

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from './app.module.scss';
 import 'antd/dist/antd.min.css';
@@ -11,11 +11,18 @@ import SignUpForm from "../forms/signup";
 import EditProfileForm from "../forms/editprofile/editprofile";
 import { setSignedIn, setUserData } from "../../redux/actions/actions";
 import { updateUser } from "../../apiClient";
-import { useAppDispatch } from '../../typescript/hooks'
+import { useAppDispatch, useAppSelector } from '../../typescript/hooks'
+import ArticleForm from "../forms/article/articleform";
+import { RootState } from "../../redux";
+
 
 const App: React.FC = () => {
-
   const dispatch = useAppDispatch();
+
+  const isSignedIn = (state: RootState) => state.user.signedin;
+  const isUserSignedIn = useAppSelector(isSignedIn);
+
+  const content = isUserSignedIn ? <ArticleForm /> : <Navigate to='/articles' />;
 
   useEffect(() => {
     if (Cookies.get('token')) {
@@ -35,6 +42,8 @@ const App: React.FC = () => {
           <Route path="/sign-in" element={<SignInForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />
           <Route path="/profile" element={<EditProfileForm />} />
+          <Route path="/new-article" element={content} />
+          <Route path="/articles/:slug/edit" element={content}  />
         </Route>
       </Routes>
     </div>

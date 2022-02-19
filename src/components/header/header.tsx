@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from './header.module.scss';
-import { logOutUser } from "../../redux/actions/actions";
+import { logOutUser, setEditMode } from "../../redux/actions/actions";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
 import { RootState } from "../../redux";
 
@@ -16,6 +16,10 @@ const Header: React.FC = () => {
     const username = useAppSelector(getUsername)
     const image = useAppSelector(getImage)
     const navigate = useNavigate();
+
+    const createArticle = () => {
+        dispatch(setEditMode(false))
+    }
 
     const logOut = () => {
         dispatch(logOutUser());
@@ -36,7 +40,7 @@ const Header: React.FC = () => {
                 <Link to="/sign-up"><button type="button" className={styles.signupbtn}>Sign up</button></Link>
             </div> :
             <div className={styles.signed}>
-                <button className={styles.createbtn} type="button">Create article</button>
+                <Link to="/new-article"><button className={styles.createbtn} type="button" onClick={() => createArticle()}>Create article</button></Link>
                 <Link to="/profile" className={styles.user}><span>{username}</span><img className={styles.avatar} src={image} alt="user_avatar" /></Link>
                 <button className={styles.logoutbtn} type="button" onClick={logOut}>Log out</button>
             </div>}
