@@ -7,7 +7,7 @@ import { updateUser } from '../../../apiClient';
 import { setUserData } from '../../../redux/actions/actions';
 import { useAppSelector, useAppDispatch } from '../../../typescript/hooks'
 import { getCurrentUser, getToken, getStateEmail } from '../../../redux/selectors/selectors';
-import { FormDataType } from '../../../typescript/types/types';
+import { IFormData } from '../../../typescript/types/types';
 
 
 const EditProfileForm: React.FC = () => {
@@ -27,7 +27,7 @@ const EditProfileForm: React.FC = () => {
 		});
 	}, [form, stateEmail, stateUsername]);
 
-    const onFinish = (values: FormDataType) : void => {
+    const onFinish = (values: IFormData) : void => {
       form.resetFields();
       const formData = {
           "email": values.email,

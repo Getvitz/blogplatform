@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space } from 'antd';
 import styles from './articleform.module.scss'
 import { createArticle, updateArticle } from '../../../apiClient';
-import { ArticleType } from '../../../typescript/types/types';
+import { IArticle } from '../../../typescript/types/types';
 import { useAppSelector } from '../../../typescript/hooks'
 import { 
   getArticleTitle, 
@@ -48,7 +48,7 @@ const ArticleForm: React.FC = () => {
   }}, 
     [articleDescription, articleText, articleTitle, editMode, articleTagList, form]);
 
-    const onFinish = (values: ArticleType) : void => {
+    const onFinish = (values: IArticle) : void => {
       const formData = {
         "title": values.title,
         "description": values.description,

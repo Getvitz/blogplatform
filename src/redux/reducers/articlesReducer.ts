@@ -1,5 +1,5 @@
 import { 
-  ArticleType, 
+  IArticle, 
   DataLoadingType, 
   GetArticlesSuccessType, 
   GetOneArticlesSuccessType, 
@@ -9,7 +9,7 @@ import {
 const defaultState = {
   loading: true,
   articlesCount: 0,
-  articlesList: [] as Array<ArticleType>,
+  articlesList: [] as Array<IArticle>,
   article: {
     author: {
       username: '',
@@ -25,7 +25,7 @@ const defaultState = {
     tagList:[] as Array<string>,
     title: '',
     updatedAt: ''
-  } as ArticleType,
+  } as IArticle,
   editmode: false
 };
 

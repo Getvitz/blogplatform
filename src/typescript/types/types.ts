@@ -9,14 +9,14 @@ import {
     TOGGLE_FAVORITE
   } from '../../redux/actions/actionTypes'
 
-export type AuthorType = {
+interface IAuthor {
     username: string,
     image: string,
     following: boolean
   }
   
-export type ArticleType = {
-    author?: AuthorType,
+export interface IArticle {
+    author?: IAuthor,
     body: string,
     createdAt?: string,
     description: string,
@@ -29,37 +29,37 @@ export type ArticleType = {
     editmode?: boolean
   }
 
-export type GetArticlesSuccessPayloadType = {  
-    articles: Array<ArticleType>,
+export interface IArticlePayload {  
+    articles: Array<IArticle>,
     articlesCount: number
   }
   
 export type GetArticlesSuccessType = {
     type: typeof GET_ARTICLES,
-    payload: GetArticlesSuccessPayloadType
+    payload: IArticlePayload
   }
 
 
 export type GetOneArticlesSuccessType = {
     type: typeof GET_ONE_ARTICLE,
-    payload: ArticleType
+    payload: IArticle
   }
 
 export type DataLoadingType = {
     type: typeof DATA_LOADING
   }
 
-  export type SetEditModeType = {
+export type SetEditModeType = {
     type: typeof SET_EDIT_MODE,
     boolean: boolean
   }
 
-  export type ToggleFavoriteType = {
+export type ToggleFavoriteType = {
     type: typeof TOGGLE_FAVORITE,
-    payload: ArticleType
+    payload: IArticle
   }
 
- export  type SetSignedInType = {
+export  type SetSignedInType = {
     type: typeof SIGN_IN,
   }
 
@@ -67,7 +67,7 @@ export type LogOutUserType = {
     type: typeof LOG_OUT_USER
   }
 
-export type SetUserDataPayloadType = {
+export interface IUserPayload {
     username: string,
     email: string,
     image: string,
@@ -77,10 +77,10 @@ export type SetUserDataPayloadType = {
   
 export type SetUserDataType = {
     type: typeof SET_USER_DATA,
-    payload: SetUserDataPayloadType
+    payload: IUserPayload
   }
 
-export type FormDataType = {
+export interface IFormData {
     username?: string,
     email: string,
     image?: string,

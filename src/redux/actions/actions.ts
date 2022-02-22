@@ -11,24 +11,24 @@ import {
 
 import { 
   GetArticlesSuccessType, 
-  GetArticlesSuccessPayloadType, 
-  ArticleType, 
+  IArticlePayload, 
+  IArticle, 
   GetOneArticlesSuccessType,
   DataLoadingType,
   SetSignedInType,
   LogOutUserType,
-  SetUserDataPayloadType,
+  IUserPayload,
   SetUserDataType,
   SetEditModeType,
   ToggleFavoriteType
 } from '../../typescript/types/types';
 
-export const getArticlesSuccess = (payload: GetArticlesSuccessPayloadType) : GetArticlesSuccessType => ({
+export const getArticlesSuccess = (payload: IArticlePayload) : GetArticlesSuccessType => ({
   type: GET_ARTICLES,
   payload
 });
 
-export const getOneArticleSuccess = (payload: ArticleType) : GetOneArticlesSuccessType => ({
+export const getOneArticleSuccess = (payload: IArticle) : GetOneArticlesSuccessType => ({
   type: GET_ONE_ARTICLE,
   payload,
 });
@@ -50,7 +50,7 @@ export const logOutUser = () : LogOutUserType => ({
 });
 
 
-export const setUserData = (payload : SetUserDataPayloadType) : SetUserDataType => ({
+export const setUserData = (payload : IUserPayload) : SetUserDataType => ({
   type: SET_USER_DATA,
   payload,
 });
@@ -62,7 +62,7 @@ export const setEditMode = (boolean: boolean) : SetEditModeType => {
   };
 };
 
-export const toggleFavorite = (payload: ArticleType) : ToggleFavoriteType => {
+export const toggleFavorite = (payload: IArticle) : ToggleFavoriteType => {
   return {
     type: TOGGLE_FAVORITE,
     payload

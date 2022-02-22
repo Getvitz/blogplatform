@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import styles from './signup.module.scss'
 import { registerUser } from '../../../apiClient';
 import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
-import { SetUserDataPayloadType, FormDataType } from '../../../typescript/types/types';
+import { IUserPayload, IFormData } from '../../../typescript/types/types';
 import { useAppDispatch } from '../../../typescript/hooks'
 
 
@@ -15,7 +15,7 @@ const SignUpForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const register = (data: Pick<SetUserDataPayloadType, 'email'> & {password: string}) => {
+  const register = (data: Pick<IUserPayload, 'email'> & {password: string}) => {
     // @ts-ignore
     dispatch(dataLoading)
     registerUser(data)
@@ -48,7 +48,7 @@ const SignUpForm: React.FC = () => {
   })
   }
 
-    const onFinish =  (values: FormDataType) : void => {
+    const onFinish =  (values: IFormData) : void => {
       const formData = {
           "username": values.username,
           "email": values.email,

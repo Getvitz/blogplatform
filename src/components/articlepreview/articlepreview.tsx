@@ -6,7 +6,7 @@ import format from "date-fns/format";
 import styles from './articlepreview.module.scss';
 import likesheart from "../../assets/img/likesheart.svg";
 import likesfilled from "../../assets/img/like-filled.svg";
-import { ArticleType } from "../../typescript/types/types";
+import { IArticle } from "../../typescript/types/types";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
 import deleteModal from "../forms/modal/modal";
 import { setEditMode, toggleFavorite } from "../../redux/actions/actions";
@@ -14,7 +14,7 @@ import { deleteArticle, unFavoriteArticle, favoriteArticle } from "../../apiClie
 import { getArticleAuthor, getCurrentUser, getUserStatus, getToken } from "../../redux/selectors/selectors";
 
 
-const Articlepreview: React.FC<ArticleType> = (article: ArticleType) => {
+const Articlepreview: React.FC<IArticle> = (article: IArticle) => {
 
     const {title, slug, author, description, createdAt, tagList, favoritesCount, favorited} = article;
     const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;

@@ -6,7 +6,7 @@ import { signInUser } from '../../../apiClient';
 import styles from './signin.module.scss';
 import { useAppDispatch } from '../../../typescript/hooks'
 import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
-import { FormDataType } from '../../../typescript/types/types';
+import { IFormData } from '../../../typescript/types/types';
 
 const SignInForm: React.FC = () => {
 
@@ -15,7 +15,7 @@ const SignInForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-    const onFinish = (values: FormDataType) : void => {
+  const onFinish = (values: IFormData) : void => {
      // @ts-ignore
       dispatch(dataLoading)
       const formData = {
