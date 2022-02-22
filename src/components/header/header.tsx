@@ -4,17 +4,16 @@ import Cookies from "js-cookie";
 import styles from './header.module.scss';
 import { logOutUser, setEditMode } from "../../redux/actions/actions";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
-import { RootState } from "../../redux";
+import { getCurrentUser, isSignedIn, getImage } from "../../redux/selectors/selectors";
 
 const Header: React.FC = () => {
+
     const dispatch = useAppDispatch();
-    const isSignedIn = (state: RootState) => state.user.signedin;
-    const getUsername = (state: RootState) => state.user.username;
-    const getImage = (state: RootState) => state.user.image;
 
     const isUserSignedIn = useAppSelector(isSignedIn)
-    const username = useAppSelector(getUsername)
+    const username = useAppSelector(getCurrentUser)
     const image = useAppSelector(getImage)
+    
     const navigate = useNavigate();
 
     const createArticle = () => {

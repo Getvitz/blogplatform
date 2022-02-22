@@ -5,7 +5,8 @@ import {
     SET_USER_DATA,
     SIGN_IN,
     LOG_OUT_USER,
-    SET_EDIT_MODE
+    SET_EDIT_MODE,
+    TOGGLE_FAVORITE
   } from '../../redux/actions/actionTypes'
 
 export type AuthorType = {
@@ -53,6 +54,11 @@ export type DataLoadingType = {
     boolean: boolean
   }
 
+  export type ToggleFavoriteType = {
+    type: typeof TOGGLE_FAVORITE,
+    payload: ArticleType
+  }
+
  export  type SetSignedInType = {
     type: typeof SIGN_IN,
   }
@@ -81,3 +87,5 @@ export type FormDataType = {
     token?: string,
     password?: string
   }
+
+export type OnDeleteModalType = () => void;

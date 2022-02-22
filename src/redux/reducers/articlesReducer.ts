@@ -1,4 +1,10 @@
-import { ArticleType, DataLoadingType, GetArticlesSuccessType, GetOneArticlesSuccessType, SetEditModeType } from "../typescript/types/types";
+import { 
+  ArticleType, 
+  DataLoadingType, 
+  GetArticlesSuccessType, 
+  GetOneArticlesSuccessType, 
+  SetEditModeType, 
+  ToggleFavoriteType } from "../../typescript/types/types";
 
 const defaultState = {
   loading: true,
@@ -25,7 +31,7 @@ const defaultState = {
 
 export type DefaultStateType = typeof defaultState;
 
-type ArticleActionsType = DataLoadingType | GetArticlesSuccessType | GetOneArticlesSuccessType | SetEditModeType;
+type ArticleActionsType = DataLoadingType | GetArticlesSuccessType | GetOneArticlesSuccessType | SetEditModeType | ToggleFavoriteType;
 
 const articlesReducer = (state = defaultState, action: ArticleActionsType) : DefaultStateType => {
   switch (action.type) {
@@ -41,7 +47,7 @@ const articlesReducer = (state = defaultState, action: ArticleActionsType) : Def
         articlesCount: action.payload.articlesCount,
         loading: false,
         article: defaultState.article,
-        editmode: false
+        editmode: false,
       };
     case 'GET_ONE_ARTICLE':
       return {
@@ -54,6 +60,13 @@ const articlesReducer = (state = defaultState, action: ArticleActionsType) : Def
       return {
         ...state,
         editmode: action.boolean
+      };
+    case 'TOGGLE_FAVORITE':
+      return {
+        ...state,
+        articlesList: state.articlesList.map((article) => article.slug === action.payload.slug ? {
+          ...article, favorited: action.payload.favorited, favoritesCount: action.payload.favoritesCount} : article),
+        article: { ...action.payload, author: state.article.author }
       };
     default:
       return state;

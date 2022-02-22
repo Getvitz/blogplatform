@@ -10,23 +10,23 @@ import SignInForm from "../forms/signin/signin";
 import SignUpForm from "../forms/signup";
 import EditProfileForm from "../forms/editprofile/editprofile";
 import { setSignedIn, setUserData } from "../../redux/actions/actions";
-import { updateUser } from "../../apiClient";
+import { getUser } from "../../apiClient";
 import { useAppDispatch, useAppSelector } from '../../typescript/hooks'
 import ArticleForm from "../forms/article/articleform";
-import { RootState } from "../../redux";
+import { isSignedIn } from "../../redux/selectors/selectors";
 
 
 const App: React.FC = () => {
+  
   const dispatch = useAppDispatch();
 
-  const isSignedIn = (state: RootState) => state.user.signedin;
   const isUserSignedIn = useAppSelector(isSignedIn);
 
   const content = isUserSignedIn ? <ArticleForm /> : <Navigate to='/articles' />;
 
   useEffect(() => {
     if (Cookies.get('token')) {
-      updateUser(JSON.parse(Cookies.get('user')), Cookies.get('token'))
+      getUser(Cookies.get('token'))
       .then((body) => {
         dispatch(setSignedIn())
         dispatch(setUserData(body.user));

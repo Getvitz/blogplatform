@@ -2,30 +2,31 @@ import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space } from 'antd';
 import styles from './articleform.module.scss'
-import { createArticle } from '../../../apiClient';
+import { createArticle, updateArticle } from '../../../apiClient';
 import { ArticleType } from '../../../typescript/types/types';
 import { useAppSelector } from '../../../typescript/hooks'
-import { RootState } from "../../../redux";
+import { 
+  getArticleTitle, 
+  getArticleText, 
+  getArticleDescription, 
+  getArticleTagList, 
+  getArticleSlug, 
+  getToken, 
+  getEditStatus } from '../../../redux/selectors/selectors';
 
 
 const ArticleForm: React.FC = () => {
-  const [form] = Form.useForm();
 
-  const getToken = (state: RootState) => state.user.token;
-  const getEditStatus = (state: RootState) => state.articles.editmode;
-  const getArticleTitle = (state: RootState) => state.articles.article.title;
-  const getArticleText = (state: RootState) => state.articles.article.body;
-  const getArticleDescription = (state: RootState) => state.articles.article.description;
-  const getArticleTagList = (state: RootState) => state.articles.article.tagList;
+  const [form] = Form.useForm();
   
   const articleTitle = useAppSelector(getArticleTitle);
   const articleText = useAppSelector(getArticleText);
   const articleDescription = useAppSelector(getArticleDescription);
   const articleTagList = useAppSelector(getArticleTagList);
-
-  
+  const articleSlug = useAppSelector(getArticleSlug);
   const token = useAppSelector(getToken)
   const editMode = useAppSelector(getEditStatus);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,26 +38,26 @@ const ArticleForm: React.FC = () => {
         "tagList": articleTagList
       })
     }
-  else {
-    form.setFieldsValue({
-      "title": '',
-      "description": '',
-      "body": '',
-      "tagList": []
+    else {
+      form.setFieldsValue({
+        "title": '',
+        "description": '',
+        "body": '',
+        "tagList": []
     })
   }}, 
     [articleDescription, articleText, articleTitle, editMode, articleTagList, form]);
 
-    const onFinish = (values: ArticleType) => {
+    const onFinish = (values: ArticleType) : void => {
       const formData = {
         "title": values.title,
         "description": values.description,
         "body": values.body,
         "tagList": values.tagList
       }
-      createArticle(formData, token)
-      navigate('/')
-    console.log('Received values of form: ', formData);
+      if(editMode) updateArticle(formData, articleSlug, token);
+      else createArticle(formData, token);
+      navigate(`/`)
   };
 
   return (
@@ -153,7 +154,7 @@ const ArticleForm: React.FC = () => {
             (form.getFieldsError().filter(({ errors }) => errors.length).length) > 0
           }
           >
-          Create
+          Send
         </Button>)}
       </Form.Item>
     </Form>

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import styles from './signup.module.scss'
 import { registerUser } from '../../../apiClient';
 import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
-import { SetUserDataPayloadType } from '../../../typescript/types/types';
+import { SetUserDataPayloadType, FormDataType } from '../../../typescript/types/types';
 import { useAppDispatch } from '../../../typescript/hooks'
 
 
@@ -48,14 +48,13 @@ const SignUpForm: React.FC = () => {
   })
   }
 
-    const onFinish = values => {
+    const onFinish =  (values: FormDataType) : void => {
       const formData = {
           "username": values.username,
           "email": values.email,
           "password": values.password
       }
       register(formData)
-    console.log('Received values of form: ', formData);
   };
 
   return (

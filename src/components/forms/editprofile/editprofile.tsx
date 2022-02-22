@@ -6,7 +6,7 @@ import styles from './editprofile.module.scss'
 import { updateUser } from '../../../apiClient';
 import { setUserData } from '../../../redux/actions/actions';
 import { useAppSelector, useAppDispatch } from '../../../typescript/hooks'
-import { RootState } from "../../../redux";
+import { getCurrentUser, getToken, getStateEmail } from '../../../redux/selectors/selectors';
 import { FormDataType } from '../../../typescript/types/types';
 
 
@@ -16,14 +16,9 @@ const EditProfileForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getStateUsername = (state: RootState) => state.user.username;
-  const getStateEmail = (state: RootState) => state.user.email;
-  const getToken = (state: RootState) => state.user.token;
-
-  const stateUsername = useAppSelector(getStateUsername)
+  const stateUsername = useAppSelector(getCurrentUser)
   const stateEmail = useAppSelector(getStateEmail)
   const token = useAppSelector(getToken)
-
 
    useEffect(() => {
 		form.setFieldsValue({
@@ -32,7 +27,7 @@ const EditProfileForm: React.FC = () => {
 		});
 	}, [form, stateEmail, stateUsername]);
 
-    const onFinish = (values: FormDataType) => {
+    const onFinish = (values: FormDataType) : void => {
       form.resetFields();
       const formData = {
           "email": values.email,
@@ -55,7 +50,6 @@ const EditProfileForm: React.FC = () => {
         Cookies.set('token', body.user.token)
         navigate('/')
   }});  
-    console.log('Received values of form: ', formData);
   };
 
   return (

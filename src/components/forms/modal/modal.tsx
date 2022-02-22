@@ -1,12 +1,11 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-
-import 'antd/dist/antd.css';
+import { OnDeleteModalType } from '../../../typescript/types/types';
 
 const { confirm } = Modal;
 
-function deleteModal(cb) {
+function deleteModal(cb: OnDeleteModalType) {
   confirm({
     okText: 'Yes',
     cancelText: 'No',

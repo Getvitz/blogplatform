@@ -1,62 +1,52 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
 import { Tag } from "antd";
-// import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
 import format from "date-fns/format";
 import styles from './articlepreview.module.scss';
 import likesheart from "../../assets/img/likesheart.svg";
+import likesfilled from "../../assets/img/like-filled.svg";
 import { ArticleType } from "../../typescript/types/types";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
-import { RootState } from "../../redux";
 import deleteModal from "../forms/modal/modal";
-// import { confirm } from "../forms/modal/modal";
-// import { deleteArticle } from "../../apiClient";
-import { setEditMode } from "../../redux/actions/actions";
-import { deleteArticle } from "../../apiClient";
+import { setEditMode, toggleFavorite } from "../../redux/actions/actions";
+import { deleteArticle, unFavoriteArticle, favoriteArticle } from "../../apiClient";
+import { getArticleAuthor, getCurrentUser, getUserStatus, getToken } from "../../redux/selectors/selectors";
 
 
 const Articlepreview: React.FC<ArticleType> = (article: ArticleType) => {
-    const {title, slug, author, description, createdAt, tagList} = article;
-    const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;
 
-    const getArticleAuthor = (state: RootState) => state.articles.article.author.username;
-    const getCurrentUser = (state: RootState) => state.user.username;
-    const getUserStatus = (state: RootState) => state.user.signedin;
-    const getArticleSlug = (state: RootState) => state.articles.article.slug;
-    const getToken = (state: RootState) => state.user.token;
+    const {title, slug, author, description, createdAt, tagList, favoritesCount, favorited} = article;
+    const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;
+    const tags = tagList ? tagList.map((tag) => tag && <Tag key={uuid()}>{tag}</Tag>) : null;
 
     const articleAuthor = useAppSelector(getArticleAuthor);
     const currentUser = useAppSelector(getCurrentUser);
     const isUserSignedIn = useAppSelector(getUserStatus);
-    const articleSlug = useAppSelector(getArticleSlug);
     const token = useAppSelector(getToken);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const editArticle = () => {
+
+    const onEdit = () => {
         dispatch(setEditMode(true))
-        navigate(`/articles/${articleSlug}/edit`)
+        navigate(`/articles/${slug}/edit`)
     }
 
-    const tags = tagList ? tagList.map((tag) => tag && <Tag key={uuid()}>{tag}</Tag>) : null;
-
-    // const { confirm } = DeleteModal;
-    // function showConfirm() {
-    //     confirm({
-    //       title: 'Do you Want to delete these items?',
-    //       icon: <ExclamationCircleOutlined />,
-    //       content: 'Some descriptions',
-    //       onOk() {
-    //         console.log('OK');
-    //       },
-    //       onCancel() {
-    //         console.log('Cancel');
-    //       },
-    //     });
-    //   }
     const onDelete = () => {
-        deleteArticle(slug, token)
+        deleteArticle(slug, token);
+        navigate('/')
+    }
+
+    const onFavorited = () => {
+        if(favorited) {
+        unFavoriteArticle(slug, token)
+        .then((body) => dispatch(toggleFavorite(body.article)))
+        }
+        else {
+        favoriteArticle(slug, token)
+        .then((body) => {dispatch(toggleFavorite(body.article))})
+        }
     }
 
   return (
@@ -66,8 +56,8 @@ const Articlepreview: React.FC<ArticleType> = (article: ArticleType) => {
                 <div className={styles.title}>
                     <Link to={`/articles/${slug}`} className={styles.titletext}>{title}</Link>
                     <div className={styles.likes}>
-                        <img src={likesheart} alt="like-img" />
-                        <span>12</span>
+                        <button data-tooltip="Rate this article" type="button" disabled={!isUserSignedIn} onClick={() => onFavorited()}><img src={favorited ? likesfilled : likesheart} alt="like-img" /></button>
+                        <span>{favoritesCount}</span>
                     </div>
                 </div>
                 <div className={styles.taglist}>
@@ -86,7 +76,7 @@ const Articlepreview: React.FC<ArticleType> = (article: ArticleType) => {
             <div className={styles.previewtext}>{description}</div>
             {currentUser === articleAuthor && isUserSignedIn && <div className={styles.articlebtns}>
                 <button type="button" className={styles.delbtn} onClick={() => deleteModal(onDelete)}>Delete</button>
-                <button type="button" className={styles.editbtn} onClick={() => editArticle()}>Edit</button>
+                <button type="button" className={styles.editbtn} onClick={() => onEdit()}>Edit</button>
             </div>}
         </div>
     </div>

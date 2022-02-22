@@ -40,7 +40,6 @@ const SignInForm: React.FC = () => {
         Cookies.set('user', JSON.stringify(body.user))
         navigate('/')
   }});  
-    console.log('Received values of form: ', formData);
   };
 
   return (

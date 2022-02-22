@@ -5,7 +5,8 @@ import {
   SET_USER_DATA,
   SIGN_IN,
   LOG_OUT_USER,
-  SET_EDIT_MODE
+  SET_EDIT_MODE,
+  TOGGLE_FAVORITE
 } from './actionTypes'
 
 import { 
@@ -18,7 +19,8 @@ import {
   LogOutUserType,
   SetUserDataPayloadType,
   SetUserDataType,
-  SetEditModeType
+  SetEditModeType,
+  ToggleFavoriteType
 } from '../../typescript/types/types';
 
 export const getArticlesSuccess = (payload: GetArticlesSuccessPayloadType) : GetArticlesSuccessType => ({
@@ -57,5 +59,12 @@ export const setEditMode = (boolean: boolean) : SetEditModeType => {
   return {
     type: SET_EDIT_MODE,
     boolean
+  };
+};
+
+export const toggleFavorite = (payload: ArticleType) : ToggleFavoriteType => {
+  return {
+    type: TOGGLE_FAVORITE,
+    payload
   };
 };

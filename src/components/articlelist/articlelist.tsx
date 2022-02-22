@@ -1,20 +1,17 @@
 import React, { useEffect, useCallback } from "react";
 import {Pagination, Spin} from "antd"
 import {v4 as uuid} from 'uuid';
+import Cookies from "js-cookie";
 import styles from './articlelist.module.scss';
 import Articlepreview from "../articlepreview";
 import { getAllArticles } from "../../apiClient";
 import { getArticlesSuccess, dataLoading } from "../../redux/actions/actions";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
-import { RootState } from "../../redux";
+import { getArticlesList, getArticlesCount, getLoadingState } from "../../redux/selectors/selectors";
 
 const Articlelist: React.FC = () => {
 
   const dispatch = useAppDispatch();
-
-  const getArticlesCount = (state: RootState) => state.articles.articlesCount;
-  const getArticlesList = (state: RootState) => state.articles.articlesList;
-  const getLoadingState = (state: RootState) => state.articles.loading;
 
   const articlesList = useAppSelector(getArticlesList);
   const articlesCount = useAppSelector(getArticlesCount);
@@ -22,11 +19,12 @@ const Articlelist: React.FC = () => {
 
   const getArticles = useCallback((limit, offset) => {
     dispatch(dataLoading());
-    getAllArticles(limit, offset)
+    getAllArticles(limit, offset, Cookies.get('token'))
     .then((body) => dispatch(getArticlesSuccess(body)))}, [dispatch])
 
   useEffect(() => {
     getArticles(5, 0)
+    return getArticles(5, 0)
     }, [getArticles])
 
   const articlePreviews = !loading ? articlesList
