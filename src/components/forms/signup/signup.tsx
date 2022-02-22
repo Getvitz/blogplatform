@@ -139,7 +139,7 @@ const SignUpForm: React.FC = () => {
             message: 'Please repeat your Password!',
           },
           ({ getFieldValue }) => ({
-            validator(_, value) {
+            validator(name, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve();
               }
@@ -162,7 +162,7 @@ const SignUpForm: React.FC = () => {
         rules={[
           {
               required: true,
-              validator: async (_, checked) => {
+              validator: async (name, checked) => {
                   if (!checked) {
                       return Promise.reject(
                           new Error("You must accept agreement to continue"),
