@@ -4,15 +4,15 @@ import Cookies from "js-cookie";
 import styles from './app.module.scss';
 import 'antd/dist/antd.min.css';
 import Layout from "../layout";
-import Articlelist from "../articlelist";
+import Articlelist from "../article-list";
 import Article from "../article";
-import SignInForm from "../forms/signin/signin";
-import SignUpForm from "../forms/signup";
-import EditProfileForm from "../forms/editprofile/editprofile";
+import SignInForm from "../forms/sign-in/sign-in";
+import SignUpForm from "../forms/sign-up";
+import EditProfileForm from "../forms/edit-profile/edit-profile";
 import { setSignedIn, setUserData } from "../../redux/actions/actions";
 import { getUser } from "../../apiClient";
 import { useAppDispatch, useAppSelector } from '../../typescript/hooks'
-import ArticleForm from "../forms/article/articleform";
+import ArticleForm from "../forms/article/article-form";
 import { isSignedIn } from "../../redux/selectors/selectors";
 
 

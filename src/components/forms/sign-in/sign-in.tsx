@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import Cookies from 'js-cookie';
 import { signInUser } from '../../../apiClient';
-import styles from './signin.module.scss';
+import styles from './sign-in.module.scss';
 import { useAppDispatch } from '../../../typescript/hooks'
 import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
-import { IFormData } from '../../../typescript/types/types';
+import { FormDataFeatures } from '../../../typescript/models/models';
 
 const SignInForm: React.FC = () => {
 
@@ -15,9 +15,8 @@ const SignInForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onFinish = (values: IFormData) : void => {
-     // @ts-ignore
-      dispatch(dataLoading)
+  const onFinish = (values: FormDataFeatures) : void => {
+      dispatch(dataLoading())
       const formData = {
           "email": values.email,
           "password": values.password

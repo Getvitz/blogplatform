@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space } from 'antd';
-import styles from './articleform.module.scss'
+import styles from './article-form.module.scss'
 import { createArticle, updateArticle } from '../../../apiClient';
-import { IArticle } from '../../../typescript/types/types';
+import { ArticleFeatures } from '../../../typescript/models/models';
 import { useAppSelector } from '../../../typescript/hooks'
 import { 
   getArticleTitle, 
@@ -48,7 +48,7 @@ const ArticleForm: React.FC = () => {
   }}, 
     [articleDescription, articleText, articleTitle, editMode, articleTagList, form]);
 
-    const onFinish = (values: IArticle) : void => {
+    const onFinish = (values: ArticleFeatures) : void => {
       const formData = {
         "title": values.title,
         "description": values.description,

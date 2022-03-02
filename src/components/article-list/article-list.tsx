@@ -2,8 +2,8 @@ import React, { useEffect, useCallback } from "react";
 import {Pagination, Spin} from "antd"
 import {v4 as uuid} from 'uuid';
 import Cookies from "js-cookie";
-import styles from './articlelist.module.scss';
-import Articlepreview from "../articlepreview";
+import styles from './article-list.module.scss';
+import Articlepreview from "../article-preview";
 import { getAllArticles } from "../../apiClient";
 import { getArticlesSuccess, dataLoading } from "../../redux/actions/actions";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
@@ -24,7 +24,6 @@ const Articlelist: React.FC = () => {
 
   useEffect(() => {
     getArticles(5, 0)
-    return getArticles(5, 0)
     }, [getArticles])
 
   const articlePreviews = !loading ? articlesList

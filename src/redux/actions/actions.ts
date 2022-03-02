@@ -10,25 +10,28 @@ import {
 } from './actionTypes'
 
 import { 
+  ArticlePayloadFeatures, 
+  ArticleFeatures,
+  UserPayloadFeatures, 
+} from '../../typescript/models/models';
+
+import {
   GetArticlesSuccessType, 
-  IArticlePayload, 
-  IArticle, 
   GetOneArticlesSuccessType,
   DataLoadingType,
   SetSignedInType,
   LogOutUserType,
-  IUserPayload,
   SetUserDataType,
   SetEditModeType,
   ToggleFavoriteType
-} from '../../typescript/types/types';
+} from '../types/types'
 
-export const getArticlesSuccess = (payload: IArticlePayload) : GetArticlesSuccessType => ({
+export const getArticlesSuccess = (payload: ArticlePayloadFeatures) : GetArticlesSuccessType => ({
   type: GET_ARTICLES,
   payload
 });
 
-export const getOneArticleSuccess = (payload: IArticle) : GetOneArticlesSuccessType => ({
+export const getOneArticleSuccess = (payload: ArticleFeatures) : GetOneArticlesSuccessType => ({
   type: GET_ONE_ARTICLE,
   payload,
 });
@@ -50,7 +53,7 @@ export const logOutUser = () : LogOutUserType => ({
 });
 
 
-export const setUserData = (payload : IUserPayload) : SetUserDataType => ({
+export const setUserData = (payload : UserPayloadFeatures) : SetUserDataType => ({
   type: SET_USER_DATA,
   payload,
 });
@@ -62,7 +65,7 @@ export const setEditMode = (boolean: boolean) : SetEditModeType => {
   };
 };
 
-export const toggleFavorite = (payload: IArticle) : ToggleFavoriteType => {
+export const toggleFavorite = (payload: ArticleFeatures) : ToggleFavoriteType => {
   return {
     type: TOGGLE_FAVORITE,
     payload

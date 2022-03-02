@@ -5,7 +5,7 @@ import { Spin } from "antd";
 import Cookies from "js-cookie";
 import remarkGfm from 'remark-gfm';
 import styles from './article.module.scss';
-import Articlepreview from "../articlepreview";
+import Articlepreview from "../article-preview";
 import {getOneArticle} from "../../apiClient"
 import { getOneArticleSuccess, dataLoading } from "../../redux/actions/actions";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'

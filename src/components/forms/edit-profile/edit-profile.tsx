@@ -2,12 +2,12 @@ import React, {useEffect} from 'react';
 import { Form, Input, Button } from 'antd';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import styles from './editprofile.module.scss'
+import styles from './edit-profile.module.scss'
 import { updateUser } from '../../../apiClient';
 import { setUserData } from '../../../redux/actions/actions';
 import { useAppSelector, useAppDispatch } from '../../../typescript/hooks'
 import { getCurrentUser, getToken, getStateEmail } from '../../../redux/selectors/selectors';
-import { IFormData } from '../../../typescript/types/types';
+import { FormDataFeatures } from '../../../typescript/models/models';
 
 
 const EditProfileForm: React.FC = () => {
@@ -27,7 +27,7 @@ const EditProfileForm: React.FC = () => {
 		});
 	}, [form, stateEmail, stateUsername]);
 
-    const onFinish = (values: IFormData) : void => {
+    const onFinish = (values: FormDataFeatures) : void => {
       form.resetFields();
       const formData = {
           "email": values.email,

@@ -1,4 +1,4 @@
-import { IArticle, IUserPayload } from "../typescript/types/types";
+import { ArticleFeatures, UserPayloadFeatures, UserLoginType } from "../typescript/models/models";
 
 const apiBase = 'https://kata.academy:8021/api/';
 
@@ -24,7 +24,7 @@ export const getAllArticles = async (limit: number, offset: number, token: strin
   return res
 };
 
-export const registerUser = async (data: Pick<IUserPayload, 'email'> & {password: string}) => {
+export const registerUser = async (data: UserLoginType) => {
   const res = await fetch(`${apiBase}users`, {
     method: 'POST',
     headers: {
@@ -35,7 +35,7 @@ export const registerUser = async (data: Pick<IUserPayload, 'email'> & {password
   return res;
 };
 
-export const signInUser = async (data: Pick<IUserPayload, 'email'> & {password: string}) => {
+export const signInUser = async (data: UserLoginType) => {
   const res = await fetch(`${apiBase}users/login`, {
     method: 'POST',
     headers: {
@@ -57,7 +57,7 @@ export const getUser = async (token: string) => {
   return res;
 };
 
-export const updateUser = async (data: IUserPayload, token: string) => {
+export const updateUser = async (data: UserPayloadFeatures, token: string) => {
   const res = await fetch(`${apiBase}user`, {
     method: 'PUT',
     headers: {
@@ -69,7 +69,7 @@ export const updateUser = async (data: IUserPayload, token: string) => {
   return res;
 };
 
-export const createArticle = async (data: IArticle, token: string) => {
+export const createArticle = async (data: ArticleFeatures, token: string) => {
   const res = await fetch(`${apiBase}articles`, {
     method: 'POST',
     headers: {
@@ -82,7 +82,7 @@ export const createArticle = async (data: IArticle, token: string) => {
   return res;
 };
 
-export const updateArticle = async (data: IArticle, slug: string, token: string) => {
+export const updateArticle = async (data: ArticleFeatures, slug: string, token: string) => {
   const res = await fetch(`${apiBase}articles/${slug}`, {
     method: 'PUT',
     headers: {

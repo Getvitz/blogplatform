@@ -1,15 +1,15 @@
-import { 
-  IArticle, 
+import { ArticleFeatures } from "../../typescript/models/models";
+import {
   DataLoadingType, 
   GetArticlesSuccessType, 
   GetOneArticlesSuccessType, 
   SetEditModeType, 
-  ToggleFavoriteType } from "../../typescript/types/types";
+  ToggleFavoriteType } from "../types/types"
 
 const defaultState = {
   loading: true,
   articlesCount: 0,
-  articlesList: [] as Array<IArticle>,
+  articlesList: [] as Array<ArticleFeatures>,
   article: {
     author: {
       username: '',
@@ -25,7 +25,7 @@ const defaultState = {
     tagList:[] as Array<string>,
     title: '',
     updatedAt: ''
-  } as IArticle,
+  } as ArticleFeatures,
   editmode: false
 };
 

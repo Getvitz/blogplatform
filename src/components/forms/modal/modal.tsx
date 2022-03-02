@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { OnDeleteModalType } from '../../../typescript/types/types';
+import { OnDeleteModalType } from '../../../typescript/models/models';
 
 const { confirm } = Modal;
 

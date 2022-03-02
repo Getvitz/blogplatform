@@ -1,5 +1,5 @@
 // import { AnyAction } from "redux";
-import { SetUserDataType, SetSignedInType, LogOutUserType } from "../../typescript/types/types";
+import { SetUserDataType, SetSignedInType, LogOutUserType } from "../types/types";
 
 const defaultState = {
   signedin: false,

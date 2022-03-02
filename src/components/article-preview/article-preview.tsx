@@ -3,10 +3,10 @@ import { v4 as uuid } from "uuid";
 import { Tag } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import format from "date-fns/format";
-import styles from './articlepreview.module.scss';
+import styles from './article-preview.module.scss';
 import likesheart from "../../assets/img/likesheart.svg";
 import likesfilled from "../../assets/img/like-filled.svg";
-import { IArticle } from "../../typescript/types/types";
+import { ArticleFeatures } from "../../typescript/models/models";
 import { useAppSelector, useAppDispatch } from '../../typescript/hooks'
 import deleteModal from "../forms/modal/modal";
 import { setEditMode, toggleFavorite } from "../../redux/actions/actions";
@@ -14,7 +14,7 @@ import { deleteArticle, unFavoriteArticle, favoriteArticle } from "../../apiClie
 import { getArticleAuthor, getCurrentUser, getUserStatus, getToken } from "../../redux/selectors/selectors";
 
 
-const Articlepreview: React.FC<IArticle> = (article: IArticle) => {
+const Articlepreview: React.FC<ArticleFeatures> = (article: ArticleFeatures) => {
 
     const {title, slug, author, description, createdAt, tagList, favoritesCount, favorited} = article;
     const creationDate = createdAt ? format(new Date(createdAt), 'LLLL d, y') : null;

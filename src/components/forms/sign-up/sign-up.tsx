@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
 import Cookies from 'js-cookie';
-import styles from './signup.module.scss'
+import styles from './sign-up.module.scss'
 import { registerUser } from '../../../apiClient';
 import { setUserData, setSignedIn, dataLoading } from '../../../redux/actions/actions';
-import { IUserPayload, IFormData } from '../../../typescript/types/types';
+import { UserLoginType, FormDataFeatures } from '../../../typescript/models/models';
 import { useAppDispatch } from '../../../typescript/hooks'
 
 
@@ -15,9 +15,8 @@ const SignUpForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const register = (data: Pick<IUserPayload, 'email'> & {password: string}) => {
-    // @ts-ignore
-    dispatch(dataLoading)
+  const register = (data: UserLoginType) => {
+    dispatch(dataLoading())
     registerUser(data)
     .then((body) => {
       if (body.errors) {
@@ -48,7 +47,7 @@ const SignUpForm: React.FC = () => {
   })
   }
 
-    const onFinish =  (values: IFormData) : void => {
+    const onFinish =  (values: FormDataFeatures) : void => {
       const formData = {
           "username": values.username,
           "email": values.email,
